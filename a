@@ -1,0 +1,50 @@
+Voici toute la solution regroupée dans un seul texte.
+
+Note : Ces requêtes sont basées sur le schéma de la base de données de l'exercice précédent. J'utilise des noms de colonnes logiques (comme publishDate, title, publisherID, etc.). Si vos noms de colonnes diffèrent, il vous suffira de les adapter.
+
+1. Select distinct genres from the Books table :
+   SELECT DISTINCT genre FROM Books;
+2. Select books with 'Harry Potter' in the title :
+   SELECT * FROM Books WHERE title LIKE '%Harry Potter%';
+3. Select the three oldest authors :
+   SELECT * FROM Authors ORDER BY age DESC LIMIT 3;
+4. Select the name and email of members who borrowed books after '2021-01-01' :
+   SELECT DISTINCT m.name, m.email FROM Members m JOIN BookLoan bl ON m.memberID = bl.member# WHERE bl.borrowDate > '2021-01-01';
+5. Select book titles borrowed by member 'Jane Doe' :
+   SELECT DISTINCT b.title FROM Books b JOIN BookLoan bl ON b.book = bl.book# JOIN Members m ON m.memberID = bl.member# WHERE m.name = 'Jane Doe';
+6. Select books with publication dates between 2000 and 2010 ordered by publication date :
+   SELECT * FROM Books WHERE YEAR(publishDate) BETWEEN 2000 AND 2010 ORDER BY publishDate;
+7. Select the top 5 most recently published books :
+   SELECT * FROM Books ORDER BY publishDate DESC LIMIT 5;
+8. Select authors aged between 40 and 60 years old :
+   SELECT * FROM Authors WHERE age BETWEEN 40 AND 60;
+9. Select publishers located in 'USA, UK' :
+   SELECT * FROM Publishers WHERE headquartersLocation LIKE '%USA%' OR headquartersLocation LIKE '%UK%';
+10. Select all books with the genre 'Fiction' published between 2020 and 2022 :
+    SELECT * FROM Books WHERE genre = 'Fiction' AND YEAR(publishDate) BETWEEN 2020 AND 2022;
+11. Select book titles published between 2018 and 2022 by 'Penguin' :
+    SELECT b.title FROM Books b JOIN Publishers p ON b.publisherID = p.publisherID WHERE p.publisherName = 'Penguin' AND YEAR(b.publishDate) BETWEEN 2018 AND 2022;
+12. Select different headquarters Locations of the publishers :
+    SELECT DISTINCT headquartersLocation FROM Publishers;
+13. Select member names and addresses located in 'New York' :
+    SELECT name, address FROM Members WHERE address LIKE '%New York%';
+14. Select the youngest and the oldest author :
+    SELECT * FROM Authors WHERE age = (SELECT MIN(age) FROM Authors) OR age = (SELECT MAX(age) FROM Authors);
+15. Select authors whose name starts with 'J' and is not null :
+    SELECT * FROM Authors WHERE authorName LIKE 'J%' AND authorName IS NOT NULL;
+16. How many books were loaned :
+    SELECT COUNT(*) FROM BookLoan;
+17. Select publishers founded after 2000 :
+    SELECT * FROM Publishers WHERE foundationYear > 2000;
+18. Select members who have an email address from 'gmail.com' :
+    SELECT * FROM Members WHERE email LIKE '%@gmail.com';
+19. Select books published between 2015 and 2020 by 'Harper' (en utilisant LIKE car les noms dans la BDD sont HarperCollins et HarperOne) :
+    SELECT b.* FROM Books b JOIN Publishers p ON b.publisherID = p.publisherID WHERE p.publisherName LIKE '%Harper%' AND YEAR(b.publishDate) BETWEEN 2015 AND 2020;
+20. Select the number of publishers located in 'London' :
+    SELECT COUNT(*) FROM Publishers WHERE headquartersLocation LIKE '%London%';
+21. Select the top 10 most recently published books :
+    SELECT * FROM Books ORDER BY publishDate DESC LIMIT 10;
+22. Select the average years of book publication :
+    SELECT AVG(YEAR(publishDate)) AS average_publication_year FROM Books;
+23. Select authors with a gmail or yahoo email address :
+    SELECT * FROM Authors WHERE email LIKE '%@gmail.com' OR email LIKE '%@yahoo.com';
